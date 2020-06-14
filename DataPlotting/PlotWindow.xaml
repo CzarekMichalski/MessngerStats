@@ -1,0 +1,131 @@
+﻿<Window x:Class="DataPlotting.PlotWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataPlotting"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="PlotWindow" Height="1080" Width="1920" WindowState="Maximized">
+    <Window.DataContext>
+        <local:PlotWindow />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="Azure">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Background="LightSlateGray" Content="Plot options" FontSize="30"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Top" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Type:" HorizontalContentAlignment="Left"
+                       VerticalContentAlignment="Center" FontSize="20" />
+                <ComboBox Grid.Column="1" Name="PlotTypeCombobox" Margin="20, 15" ItemsSource="{Binding PlotTypes}"
+                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                          SelectionChanged="PlotTypeChanged" SelectedIndex="0" />
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Labels:" VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left" FontSize="20" />
+                <CheckBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"
+                          Unchecked="LabelCheckboxUnchecked" Checked="LabelCheckboxChecked" IsChecked="True" />
+            </Grid>
+            <Button Grid.Row="3" Content="Save" FontSize="20" Margin="30, 10" Click="SavePlot" />
+            <Button Grid.Row="4" Content="Delete messages" FontSize="20" Margin="30, 10" Click="DeleteMessages" />
+            <Button Grid.Row="5" Content="Load messages" FontSize="20" Margin="30, 10" Click="LoadMessages" />
+            <Button Grid.Row="6" Content="Search" FontSize="20" Margin="30, 10" Click="OpenSearchWindow" />
+            <Button Grid.Row="7" Content="Exit" FontSize="20" Margin="30, 10" Click="Exit" />
+            <Label Grid.Row="8" Name="LoadingLabel" Content="Loading..." HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center" FontSize="20" Visibility="Hidden" />
+        </Grid>
+        <Grid Grid.Column="1" Background="LightGray">
+            <oxy:PlotView Name="PlotView" Model="{Binding Model}" Margin="50" />
+        </Grid>
+        <Grid Grid.Column="2" Background="Azure">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Background="LightSlateGray" Content="Message options" FontSize="30"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Top" />
+            <ComboBox Grid.Row="1" Name="ConversationTypeCombobox" Margin="30, 20"
+                      ItemsSource="{Binding ConversationType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedIndex="0" SelectionChanged="ConversationTypeChanged" />
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="With:" VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left" FontSize="20" />
+                <ComboBox Grid.Column="1" Name="ConversationCombobox" Margin="20, 15"
+                          ItemsSource="{Binding ConversationList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                          IsTextSearchEnabled="True" SelectionChanged="GetDateRangeForConversation" />
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="From:" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+                       FontSize="20" />
+                <DatePicker Grid.Column="1" Name="FromDatePicker" ToolTip="From"
+                            SelectedDate="{Binding From, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="To:" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+                       FontSize="20" />
+                <DatePicker Grid.Column="1" Name="ToDatePicker" ToolTip="To"
+                            SelectedDate="{Binding To, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Keyword:" VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left" FontSize="20" />
+                <TextBox Grid.Column="1" Name="SearchTextbox" Width="120" Height="40"
+                         Text="{Binding Path=Keyword, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Left" />
+            </Grid>
+            <Button Grid.Row="6" Content="Plot" FontSize="20" Margin="30, 10" Click="PlotButtonClicked" />
+        </Grid>
+    </Grid>
+</Window>

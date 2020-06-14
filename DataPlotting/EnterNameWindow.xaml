@@ -1,0 +1,20 @@
+﻿<Window x:Class="DataPlotting.EnterNameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataPlotting"
+        mc:Ignorable="d"
+        Title="EnterNameWindow" Height="300" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Please enter your name and surname you're using on messenger."
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <TextBox Grid.Row="1" Name="NameTextBox" Margin="100, 10" />
+        <Button Grid.Row="2" Width="100" Height="30" Content="Submit" Click="SubmitName" />
+    </Grid>
+</Window>
